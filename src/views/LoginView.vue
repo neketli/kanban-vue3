@@ -1,8 +1,5 @@
 <template>
   <div class="loginView">
-    <nav class="navigation">
-      <h2>Awesome kanban</h2>
-    </nav>
     <div class="wrapper">
       <!-- login -->
       <section class="login">
@@ -10,17 +7,31 @@
           <h1>А вы кто?</h1>
           <form class="login__form">
             <div class="login__item">
-              <input id="email" type="email" placeholder=" " />
+              <input
+                v-model="user.email"
+                id="email"
+                type="email"
+                placeholder=" "
+              />
               <label for="email">Электронная почта</label>
             </div>
             <div class="login__item">
-              <input id="pass" type="password" placeholder=" " />
+              <input
+                v-model="user.password"
+                id="pass"
+                type="password"
+                placeholder=" "
+              />
               <label for="pass">Пароль</label>
             </div>
           </form>
-          <form class="login__btn">
-            <button class="btn">Войти</button>
-          </form>
+          <ul class="errors">
+            <li v-show="error">Пользователь не найден!</li>
+          </ul>
+
+          <button v-if="!loading" class="btn" @click="loginUser">Войти</button>
+          <button v-else class="btn">Загрузка</button>
+
           <router-link to="/register" class="login__register"
             >Зарегистрироваться</router-link
           >
@@ -31,23 +42,34 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import column from "@/components/Column.vue";
-
 export default {
-  name: "HomeView",
+  name: "LoginView",
   data() {
-    return {};
+    return {
+      user: {
+        email: "",
+        password: "",
+      },
+    };
   },
   methods: {
-    async createColumn() {
-      await this.$store.dispatch("createColumn");
+    async loginUser() {
+      try {
+        await this.$store.dispatch("loginUser", this.user);
+        this.$router.push("/");
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   computed: {
-    ...mapGetters(["getColumns"]),
+    loading() {
+      return this.$store.getters.loading;
+    },
+    error() {
+      return this.$store.getters.error;
+    },
   },
-  components: { column },
 };
 </script>
 
@@ -56,18 +78,6 @@ $primary-white: #e6f0f3;
 $primary-black: #022231;
 $primay-bluesky: #8ac5f0;
 $primary-blue: #3398e0;
-
-.navigation {
-  background-color: rgb(13, 50, 152);
-  padding: 15px 0;
-  display: flex;
-  flex-direction: column;
-
-  & h2 {
-    margin: 0 auto;
-    color: white;
-  }
-}
 
 .login {
   width: 100vw;
@@ -140,20 +150,6 @@ $primary-blue: #3398e0;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
-  &__btn {
-    margin: 30px auto;
-    text-align: center;
-
-    .btn {
-      &::after {
-        transform: skewX(-45deg) scale(0, 1);
-      }
-      &:hover::after {
-        transform: skewX(-45deg) scale(1, 1);
-      }
-    }
-  }
-
   &__register {
     color: $primary-black;
     font-size: 1.5rem;
@@ -163,6 +159,10 @@ $primary-blue: #3398e0;
     &:visited {
       color: $primary-black;
     }
+  }
+  .errors {
+    color: red;
+    margin: 15px;
   }
 }
 </style>

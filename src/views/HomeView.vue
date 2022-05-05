@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-    <nav class="navigation">
-      <h2>Awesome kanban</h2>
-    </nav>
     <div class="wrapper">
       <div class="cols">
         <column v-for="item in getColumns" :columnId="item.id" :key="item.id" />
@@ -35,18 +32,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.navigation {
-  background-color: rgb(13, 50, 152);
-  padding: 15px 0;
-  display: flex;
-
-  & h2 {
-    margin: 0 auto;
-    color: white;
-  }
-}
-
+<style lang="scss" scoped>
 .home {
   width: 100%;
   min-width: 100vw;
@@ -76,7 +62,7 @@ export default {
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 10px 2px white;
+    text-shadow: 0 0 10px 2px rgb(0, 128, 255);
   }
 }
 </style>

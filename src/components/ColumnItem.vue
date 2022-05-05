@@ -70,6 +70,7 @@ export default {
 
 .btn {
   margin: 0 5px;
+  padding: 2px;
   font-size: 1.5rem;
   background: transparent;
   border: none;

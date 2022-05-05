@@ -1,8 +1,5 @@
 <template>
   <div class="registerView">
-    <nav class="navigation">
-      <h2>Awesome kanban</h2>
-    </nav>
     <div class="wrapper">
       <!-- register -->
       <section class="register">
@@ -35,9 +32,15 @@
             <li v-show="!validation.password && newUser.password != ''">
               Пароль должен содержать не менее 5 символов!
             </li>
+            <li v-show="error">
+              Пользователь с таким email адресом уже существует!
+            </li>
           </ul>
 
-          <button class="btn" @click="registerUser">Зарегистрироваться</button>
+          <button v-if="!loading" class="btn" @click="registerUser">
+            Зарегистрироваться
+          </button>
+          <button v-else class="btn">Загрузка...</button>
           <router-link to="/login" class="register__login">Войти</router-link>
         </div>
       </section>
@@ -47,7 +50,7 @@
 
 <script>
 export default {
-  name: "HomeView",
+  name: "RegisterView",
   data() {
     return {
       newUser: {
@@ -58,11 +61,14 @@ export default {
   },
   methods: {
     async registerUser() {
-      await this.$store.dispatch("registerUser", this.newUser);
+      try {
+        await this.$store.dispatch("registerUser", this.newUser);
+        this.$router.push("/");
+      } catch (error) {}
     },
   },
   computed: {
-    validation: function () {
+    validation() {
       const emailRE =
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return {
@@ -70,11 +76,17 @@ export default {
         password: this.newUser.password.trim().length > 5,
       };
     },
-    isValid: function () {
+    isValid() {
       const validation = this.validation;
       return Object.keys(validation).every(function (key) {
         return validation[key];
       });
+    },
+    loading() {
+      return this.$store.getters.loading;
+    },
+    error() {
+      return this.$store.getters.error;
     },
   },
 };
@@ -85,18 +97,6 @@ $primary-white: #e6f0f3;
 $primary-black: #022231;
 $primay-bluesky: #8ac5f0;
 $primary-blue: #3398e0;
-
-.navigation {
-  background-color: rgb(13, 50, 152);
-  padding: 15px 0;
-  display: flex;
-  flex-direction: column;
-
-  & h2 {
-    margin: 0 auto;
-    color: white;
-  }
-}
 
 .register {
   width: 100vw;
@@ -167,20 +167,6 @@ $primary-blue: #3398e0;
     color: $primary-black;
     transform: translateY(1rem) scale(1);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-
-  &__btn {
-    margin: 30px auto;
-    text-align: center;
-
-    .btn {
-      &::after {
-        transform: skewX(-45deg) scale(0, 1);
-      }
-      &:hover::after {
-        transform: skewX(-45deg) scale(1, 1);
-      }
-    }
   }
 
   &__login {

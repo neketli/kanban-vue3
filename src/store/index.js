@@ -4,6 +4,7 @@ import { db } from "../main";
 import { collection, addDoc } from "firebase/firestore";
 
 import user from "./user";
+import common from "./common";
 
 export default createStore({
   state: {
@@ -91,5 +92,6 @@ export default createStore({
   },
   modules: {
     user,
+    common,
   },
 });

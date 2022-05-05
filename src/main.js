@@ -20,7 +20,8 @@ const fireApp = initializeApp({
 
 let app;
 
-onAuthStateChanged(getAuth(), () => {
+onAuthStateChanged(getAuth(), (user) => {
+  store.dispatch("loggedUser", user);
   if (!app) {
     app = createApp(App).use(store).use(router).use(VueFire).mount("#app");
   }
