@@ -74,10 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary-white: #e6f0f3;
-$primary-black: #022231;
-$primay-bluesky: #8ac5f0;
-$primary-blue: #3398e0;
+@import "@/assets/vars.scss";
 
 .login {
   width: 100vw;
@@ -89,7 +86,7 @@ $primary-blue: #3398e0;
   &__inner {
     width: 60%;
     height: 88%;
-    background-color: #e6f0f3;
+    background-color: rgba($color: $blue, $alpha: 0.2);
     box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
@@ -99,12 +96,11 @@ $primary-blue: #3398e0;
     & h1 {
       font-size: 3rem;
       text-align: center;
-      color: $primary-black;
+      color: $black;
     }
   }
 
   &__item {
-    font-family: "Nunito";
     display: flex;
     flex-direction: column-reverse;
     width: 42vw;
@@ -118,8 +114,8 @@ $primary-blue: #3398e0;
     font-size: 1.5rem;
     padding: 20px;
     margin-top: 30px;
-    border-bottom: 0.1rem solid $primary-black;
-    background-color: #d2d9db;
+    border-bottom: 0.1rem solid $black;
+    background-color: $white;
     outline: none;
     text-align: center;
   }
@@ -128,7 +124,7 @@ $primary-blue: #3398e0;
     text-align: center;
     font-size: 1.5rem;
     padding-left: 1rem;
-    color: #9cacbf;
+    color: $gray;
     transform: translateY(5rem);
     transform-origin: left top;
     cursor: text;
@@ -138,26 +134,26 @@ $primary-blue: #3398e0;
   input:focus,
   input:not(:placeholder-shown) {
     transition: all 0.2s linear;
-    border-bottom: 0.2rem solid $primay-bluesky;
+    border-bottom: 0.2rem solid $blue;
     background-color: #ffffff;
   }
 
   input:focus ~ label,
   input:not(:placeholder-shown) ~ label {
     padding: 0;
-    color: $primary-black;
+    color: $black;
     transform: translateY(1rem) scale(1);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
   &__register {
-    color: $primary-black;
+    color: $black;
     font-size: 1.5rem;
     font-weight: 200;
     text-decoration: none;
 
     &:visited {
-      color: $primary-black;
+      color: $black;
     }
   }
   .errors {

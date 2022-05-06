@@ -37,15 +37,16 @@ export default {
       event.dataTransfer.setData("itemId", item.id);
     },
     updateItem() {
-      this.$store.commit({
+      this.$store.dispatch({
         type: "updateItem",
         itemId: this.item.id,
         title: this.item.title,
+        columnId: this.item.columnId,
       });
       this.editMode = false;
     },
     deleteItem() {
-      this.$store.commit({
+      this.$store.dispatch({
         type: "deleteItem",
         itemId: this.item.id,
       });
@@ -55,9 +56,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/vars.scss";
+
 .item {
   box-sizing: border-box;
-  background: #fff;
+  background: $white;
   margin: 5px;
   padding: 5px;
   border-radius: 8px;
@@ -74,14 +77,14 @@ export default {
   font-size: 1.5rem;
   background: transparent;
   border: none;
-  color: black;
+  color: $black;
   cursor: pointer;
 
   transition: 0.3s linear;
 
   &:hover {
     transform: scale(1.1);
-    text-shadow: 0 0 10px 2px white;
+    text-shadow: 0 0 10px 2px $white;
   }
 }
 </style>

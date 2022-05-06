@@ -1,0 +1,20 @@
+$white: #eeeeee;
+$black: #212121;
+$blue: #29b6f6;
+$gray: #607d8b;
+$secondary-gray: #bdbdbd;
+
+$maxWidth: 1440;
+
+@mixin font-default($font-size, $min-font-size) {
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  color: $black;
+
+  $addSize: $font-size - $min-font-size;
+  $maxWidth: $maxWidth - 320;
+  font-size: calc(
+    #{$min-font-size + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth})
+  );
+  line-height: 120%;
+}

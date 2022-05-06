@@ -23,14 +23,21 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/assets/vars.scss";
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+body {
+  background-color: $white;
+  @include font-default(24, 16);
+}
+
 .navigation {
-  background-color: rgb(13, 50, 152);
+  background-color: $gray;
   padding: 15px 0;
   display: flex;
 
@@ -41,17 +48,18 @@ export default {
 }
 
 .btn {
+  @include font-default(18, 14);
   cursor: pointer;
   border-radius: 8px;
   border: none;
-  background-color: #636ce3;
+  background-color: $blue;
   margin: 15px;
   padding: 15px;
   transition: 0.3s linear;
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 10px 2px white;
+    box-shadow: 0 0 10px 2px $blue;
   }
 }
 </style>

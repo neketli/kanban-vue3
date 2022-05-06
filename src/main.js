@@ -1,8 +1,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
+
 import router from "./router";
 import store from "./store";
+
 import VueFire from "vuefire";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
@@ -25,6 +27,9 @@ onAuthStateChanged(getAuth(), (user) => {
   if (!app) {
     app = createApp(App).use(store).use(router).use(VueFire).mount("#app");
   }
+  //   console.log(user.uid);
+  store.dispatch("loadColumns", { uid: user.uid });
+  store.dispatch("loadItems", { uid: user.uid });
 });
 
 export const db = getFirestore(fireApp);

@@ -35,43 +35,49 @@ export default {
   data() {
     return {
       editMode: false,
-      title: this.$store.state.columns.find((el) => el.id === this.columnId)
-        .title,
+      title: this.$store.state.column.columns.find(
+        (el) => el.id === this.columnId
+      ).title,
     };
   },
   computed: {
     getColumnItems() {
-      return this.$store.state.items.filter(
+      return this.$store.state.item.items.filter(
         (el) => el.columnId === this.columnId
       );
     },
     getColumnTitle() {
-      return this.$store.state.columns.find((el) => el.id === this.columnId)
-        .title;
+      return this.$store.state.column.columns.find(
+        (el) => el.id === this.columnId
+      ).title;
+    },
+    columns() {
+      return this.$store.getters.columns;
     },
   },
   methods: {
-    onDrop(event, column) {
+    onDrop(event, columnId) {
       const itemId = event.dataTransfer.getData("itemId");
-      const item = this.$store.state.items.find((el) => el.id == itemId);
-      item.columnId = column;
+      const item = this.$store.state.item.items.find((el) => el.id == itemId);
+      item.columnId = columnId;
+      item.itemId = itemId;
+      this.$store.dispatch("updateItem", item);
     },
     createItem() {
-      this.$store.commit({
+      this.$store.dispatch({
         type: "createItem",
         columnId: this.columnId,
       });
     },
     updateColumn() {
-      this.$store.commit({
-        type: "updateColumn",
+      this.$store.dispatch("updateColumn", {
         columnId: this.columnId,
         title: this.title,
       });
       this.editMode = false;
     },
     deleteColumn() {
-      this.$store.commit({
+      this.$store.dispatch({
         type: "deleteColumn",
         columnId: this.columnId,
       });
@@ -84,18 +90,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/vars.scss";
+
 .column {
   list-style: none;
   margin: 15px;
   padding: 15px;
-  background: rgba($color: #333, $alpha: 0.5);
-  max-width: 50%;
+  background: rgba($color: $black, $alpha: 0.4);
+  max-width: 25%;
   min-height: 2rem;
   display: inline-block;
+  border-radius: 8px;
 }
 
 span {
-  color: white;
+  color: $white;
 }
 
 .controls {
@@ -111,14 +120,14 @@ span {
   font-size: 1.5rem;
   background: transparent;
   border: none;
-  color: white;
+  color: $white;
   cursor: pointer;
 
   transition: 0.3s linear;
 
   &:hover {
     transform: scale(1.1);
-    text-shadow: 0 0 10px 2px white;
+    text-shadow: 0 0 10px 2px $white;
   }
 }
 </style>
