@@ -4,6 +4,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+
+import { db } from "../main";
 
 export default {
   state: {
@@ -19,7 +22,7 @@ export default {
     },
   },
   actions: {
-    async registerUser({ commit }, { email, password }) {
+    async registerUser({ dispatch, commit }, { email, password }) {
       const auth = getAuth();
       commit("clearError");
       commit("setLoading", true);
@@ -30,7 +33,7 @@ export default {
           password
         );
         commit("setUser", { uid: user.user.uid });
-
+        dispatch("initColumns");
         commit("setLoading", false);
       } catch (error) {
         commit("setLoading", false);
@@ -60,18 +63,18 @@ export default {
         //todo
         let newColumn = {
           id: Date.now().toString(),
-          title: "To Do &#128080;",
+          title: "To Do 💪",
           uid: getters.uid,
         };
         await setDoc(
           doc(db, "users", newColumn.uid, "columns", newColumn.id),
           newColumn
         );
-        commit("createColumn", newColumn);
+        // commit("createColumn", newColumn);
 
         const newItem = {
           id: Date.now().toString(),
-          columnId: newColumn.columnId,
+          columnId: newColumn.id,
           title: "Test item! U can drag me!",
           uid: getters.uid,
         };
@@ -83,7 +86,7 @@ export default {
 
         newColumn = {
           id: Date.now().toString(),
-          title: "In progress &#128293;",
+          title: "In progress 🔥",
           uid: getters.uid,
         };
         await setDoc(
@@ -91,9 +94,10 @@ export default {
           newColumn
         );
         commit("createColumn", newColumn);
+
         newColumn = {
           id: Date.now().toString(),
-          title: "Done &#128077;",
+          title: "Done 👌",
           uid: getters.uid,
         };
         await setDoc(
@@ -104,6 +108,7 @@ export default {
 
         commit("setLoading", false);
       } catch (error) {
+        console.error(error);
         commit("setLoading", false);
         commit("setError", error.message);
         throw error;

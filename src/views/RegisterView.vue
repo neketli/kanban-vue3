@@ -30,7 +30,7 @@
               Пожалуйста, введите корректный email адрес!
             </li>
             <li v-show="!validation.password && newUser.password != ''">
-              Пароль должен содержать не менее 5 символов!
+              Пароль должен содержать не менее 6 символов!
             </li>
             <li v-show="error">
               Пользователь с таким email адресом уже существует!
@@ -63,7 +63,7 @@ export default {
     async registerUser() {
       try {
         await this.$store.dispatch("registerUser", this.newUser);
-        await this.$store.dispatch("initColumns");
+        //this.$store.dispatch("initColumns");
         this.$router.push("/");
       } catch (error) {}
     },

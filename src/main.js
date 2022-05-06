@@ -28,8 +28,10 @@ onAuthStateChanged(getAuth(), (user) => {
     app = createApp(App).use(store).use(router).use(VueFire).mount("#app");
   }
   //   console.log(user.uid);
-  store.dispatch("loadColumns", { uid: user.uid });
-  store.dispatch("loadItems", { uid: user.uid });
+  if (user) {
+    store.dispatch("loadColumns", { uid: user.uid });
+    store.dispatch("loadItems", { uid: user.uid });
+  }
 });
 
 export const db = getFirestore(fireApp);
