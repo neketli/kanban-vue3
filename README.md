@@ -5,6 +5,8 @@
 Here you can find implementation of kanban board (trello clone)
 Simple structure of project helps with read and work on code
 
+![Kanban preview](https://i.ibb.co/NWhKGWN/Kanban-Preview.gif)
+
 ### Fetures ⭐
 
 - Firebase auth and database
@@ -16,6 +18,8 @@ Simple structure of project helps with read and work on code
 ```bash
 npm install
 ```
+
+next set up the .env.local to connect your app and database
 
 ### Compiles and hot-reloads for development
 

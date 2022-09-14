@@ -29,7 +29,7 @@
       </button>
     </div>
     <div v-else class="controls-edit">
-      <button class="btn btn-apply" @click="updateItem">
+      <button class="btn btn-apply" @click="updateColumn">
         <svg
           class="icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +40,7 @@
           />
         </svg>
       </button>
-      <button class="btn btn-delete" @click="deleteItem">
+      <button class="btn btn-delete" @click="deleteColumn">
         <svg
           class="icon"
           xmlns="http://www.w3.org/2000/svg"
