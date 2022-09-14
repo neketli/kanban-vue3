@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/vars.scss";
+@import "@/assets/vars";
 
 .login {
   width: 100vw;
