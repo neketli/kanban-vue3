@@ -4,7 +4,7 @@
       <div class="cols">
         <column v-for="item in columns" :columnId="item.id" :key="item.id" />
         <button class="btn btn-add_column" @click="createColumn">
-          + Add column
+          + Добавить колонку
         </button>
       </div>
     </div>
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/vars.scss";
+@import "@/assets/vars";
 
 .home {
   width: 100%;
