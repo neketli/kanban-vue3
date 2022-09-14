@@ -1,5 +1,7 @@
 # Kanban board
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e8533519-3e06-4a5f-adee-60b25db852c2/deploy-status)](https://app.netlify.com/sites/neketli-kanban-board/deploys)
+
 ## Simple kanban board maded with vue3 + vuex + firebase
 
 Here you can find implementation of kanban board (trello clone)
